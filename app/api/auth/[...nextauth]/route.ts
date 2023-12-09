@@ -15,12 +15,17 @@ const handler = NextAuth({
           body: JSON.stringify(credentials),
           headers: {'Content-Type': 'application/json'}    
         })
+
         const response = await res.json()
+        console.log(response)
         if (response.status == 'ok')
         return response.token
       }  
     })
-  ]
+  ],
+  pages: {
+    signIn: '/auth/signin'
+  }
 })
 
 export { handler as GET, handler as POST}
