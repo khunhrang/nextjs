@@ -1,5 +1,5 @@
 import NextAuth from "next-auth/next";
-import CredentialsProvider from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials"
 
 const handler = NextAuth({
   providers: [
@@ -7,20 +7,21 @@ const handler = NextAuth({
       name: 'Credentails',
       credentials: {
         username: { label: "Username", type: "text" },
-        password: { lable: "Password", type: "password"}
+        password: { label: "Password", type: "password"},
       },
       async authorize(credentials){
         const res = await fetch('http://localhost:8081/login', {
           method: 'POST',
           body: JSON.stringify(credentials),
-          headers: {'Content-Type': 'application/json'}    
-        })
+          headers: {'Content-Type': 'application/json'},    
+        });
 
-        const response = await res.json()
-        console.log(response)
-        if (response.status == 'ok')
-        return response.token
-      }  
+        const response = await res.json();
+        if (response.status === 'OK'){
+          return response.user; 
+      }
+      return null;
+    }  
     })
   ],
   pages: {
